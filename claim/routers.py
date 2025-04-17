@@ -9,7 +9,7 @@ from claim.viewsets import (
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
-router.register(r'claimants', ClaimantViewSet, basename='claimant')
+router.register(r'claims', ClaimantViewSet, basename='claims')
 router.register(r'reviewers', ReviewerViewSet, basename='reviewer')
 
 app_name = 'claim'
