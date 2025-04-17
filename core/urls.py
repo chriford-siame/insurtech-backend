@@ -17,11 +17,11 @@ from rest_framework_simplejwt.views import (
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="ProdZM",
+        title="Insurance API Endpoints",
         default_version="v3",
         description="API interface",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="prodzm@support.com"),
+        contact=openapi.Contact(email="iclaim@support.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
