@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from django.db.models import Q
 from claim.serializers import (
     UserSerializer,
+    ClaimantSerializer, 
+    ReviewerSerializer
 )
 from django.contrib.auth.models import User
+from claim.models import Claimant, Reviewer, ClaimFile
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -33,3 +36,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
     lookup_field = 'lookup'  # Custom URL parameter
     
+
+class ClaimantViewSet(viewsets.ModelViewSet):
+    queryset = Claimant.objects.all()
+    serializer_class = ClaimantSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ReviewerViewSet(viewsets.ModelViewSet):
+    queryset = Reviewer.objects.all()
+    serializer_class = ReviewerSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
