@@ -164,3 +164,9 @@ MEDIA_ROOT = BASE_DIR / 'core/media/'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React.js local development server
 ]
+
+# Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '2f7f023f33dc51'
+EMAIL_HOST_PASSWORD = '853fd032915c9a'
+EMAIL_PORT = '2525'
