@@ -9,7 +9,7 @@ from claim.serializers import (
     ReviewerSerializer
 )
 from django.contrib.auth.models import User
-from claim.models import Claimant, Reviewer, ClaimFile
+from claim.models import Claimant, Reviewer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -41,6 +41,18 @@ class ClaimantViewSet(viewsets.ModelViewSet):
     queryset = Claimant.objects.all()
     serializer_class = ClaimantSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        # Fetch by query param: /claims/?username=some_user
+        username = self.request.query_params.get('username')
+        if username:
+            return Claimant.objects.filter(user__username=username)
+        return Claimant.objects.none()
+    
+    @action(detail=False, methods=["get"], url_path="mylist")
+    def my_claims(self, request):
+        # Optional endpoint: /claims/my-claims/ to fetch current user's claims
+        return Response(self.get_serializer(self.get_queryset(), many=True).data)
 
 
 class ReviewerViewSet(viewsets.ModelViewSet):
