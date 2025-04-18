@@ -6,10 +6,11 @@ from django.db.models import Q
 from claim.serializers import (
     UserSerializer,
     ClaimantSerializer, 
-    ReviewerSerializer
+    ReviewerSerializer,
+    ClaimFileSerializer,
 )
 from django.contrib.auth.models import User
-from claim.models import Claimant, Reviewer
+from claim.models import Claimant, Reviewer, ClaimFile
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -51,5 +52,10 @@ class ClaimantViewSet(viewsets.ModelViewSet):
 class ReviewerViewSet(viewsets.ModelViewSet):
     queryset = Reviewer.objects.all()
     serializer_class = ReviewerSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ClaimFileViewSet(viewsets.ModelViewSet):
+    queryset = ClaimFile.objects.all()
+    serializer_class = ClaimFile
     permission_classes = [permissions.IsAuthenticated]
 
