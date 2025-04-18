@@ -12,7 +12,7 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'claims', ClaimantViewSet, basename='claims')
 router.register(r'reviewers', ReviewerViewSet, basename='reviewer')
-router.register(r'claimfile', ClaimFileViewSet, basename='claimfile')
+router.register(r'claimfiles', ClaimFileViewSet, basename='claimfiles')
 
 app_name = 'claim'
 urlpatterns = router.urls
