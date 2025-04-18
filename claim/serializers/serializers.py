@@ -20,7 +20,11 @@ class ClaimFileSerializer(serializers.ModelSerializer):
 
 
 class ClaimantSerializer(serializers.ModelSerializer):
-    files = ClaimFileSerializer(many=True, read_only=True)
+    files = serializers.ListField(
+        child=serializers.FileField(),
+        write_only=True,
+        required=False
+    )
     user = UserSerializer(read_only=True)
 
     class Meta:
@@ -38,6 +42,13 @@ class ClaimantSerializer(serializers.ModelSerializer):
                 'date_issued',
                 'status',
         ]
+    
+    def create(self, validated_data):
+        files = validated_data.pop('files', [])
+        claim = Claimant.objects.create(**validated_data)
+        for f in files:
+            ClaimFile.objects.create(claimant=claim, file=f)
+        return claim
 
 
 class ReviewerSerializer(serializers.ModelSerializer):
