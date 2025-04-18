@@ -21,10 +21,23 @@ class ClaimFileSerializer(serializers.ModelSerializer):
 
 class ClaimantSerializer(serializers.ModelSerializer):
     files = ClaimFileSerializer(many=True, read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Claimant
-        fields = '__all__'
+        fields = [
+                'files',
+                'user',
+                'first_name',
+                'middle_name',
+                'last_name',
+                'incident',
+                'nrc',
+                'phone_number',
+                'claim_type',
+                'date_issued',
+                'status',
+        ]
 
 
 class ReviewerSerializer(serializers.ModelSerializer):
