@@ -42,18 +42,11 @@ class ClaimantViewSet(viewsets.ModelViewSet):
     serializer_class = ClaimantSerializer
     permission_classes = [permissions.IsAuthenticated]
     
-    def get_queryset(self):
-        # Fetch by query param: /claims/?username=some_user
-        username = self.request.query_params.get('username')
-        if username:
-            return Claimant.objects.filter(user__username=username)
-        return Claimant.objects.none()
-    
-    @action(detail=False, methods=["get"], url_path="mylist")
-    def my_claims(self, request):
-        # Optional endpoint: /claims/my-claims/ to fetch current user's claims
-        return Response(self.get_serializer(self.get_queryset(), many=True).data)
-
+    @action(detail=False, methods=["get"], url_path="list")
+    def all_claims(self, request):
+        queryset = Claimant.objects.filter(user__username=request.user.username)
+        serializer = ClaimantSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ReviewerViewSet(viewsets.ModelViewSet):
     queryset = Reviewer.objects.all()
