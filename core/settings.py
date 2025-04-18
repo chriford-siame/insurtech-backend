@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     
-    "claim",
+    "claim.apps.ClaimConfig",
     "drf_yasg",
     "rest_framework",
     "rest_framework_simplejwt",
