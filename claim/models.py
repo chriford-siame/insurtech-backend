@@ -1,8 +1,5 @@
 from django.db import models
-
-
-from django.db import models
-
+from django.contrib.auth.models import User
 # models.py
 
 from django.db import models
@@ -40,6 +37,7 @@ class Claimant(models.Model):
         ('rejected', 'Rejected'),
     ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
