@@ -37,6 +37,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     lookup_field = 'lookup'  # Custom URL parameter
     
+    
 
 class ClaimantViewSet(viewsets.ModelViewSet):
     queryset = Claimant.objects.all()
@@ -49,6 +50,9 @@ class ClaimantViewSet(viewsets.ModelViewSet):
         serializer = ClaimantSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
 class ReviewerViewSet(viewsets.ModelViewSet):
     queryset = Reviewer.objects.all()
     serializer_class = ReviewerSerializer
