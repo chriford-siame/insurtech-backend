@@ -30,6 +30,7 @@ class ClaimantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Claimant
         fields = [
+                'id',
                 'files',
                 'user',
                 'first_name',
