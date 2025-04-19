@@ -28,6 +28,7 @@ class Claimant(models.Model):
         ('travel', 'Travel Insurance'),
         ('agriculture', 'Agricultural Insurance'),
         ('workmen', 'Workmen’s Compensation'),
+        ('other', 'Other'),
     ]
 
     STATUS_CHOICES = [
