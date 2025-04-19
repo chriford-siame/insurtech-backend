@@ -42,6 +42,7 @@ class ClaimantSerializer(serializers.ModelSerializer):
                 'claim_type',
                 'date_issued',
                 'status',
+                'comment',
         ]
     
     def create(self, validated_data):
