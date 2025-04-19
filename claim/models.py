@@ -45,7 +45,7 @@ class Claimant(models.Model):
     nrc = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=20)
     claim_type = models.CharField(max_length=30, choices=CLAIM_TYPES)
-    date_issued = models.DateField()
+    date_issued = models.DateField(auto_now=True, blank=True, null=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
