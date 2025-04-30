@@ -7,6 +7,7 @@ from claim.models import Claimant
 def notify_user_on_status_change(sender, instance, **kwargs):
     if not instance.pk:
         # New record; skip
+        print("new entry recorded")
         return
 
     # Fetch existing object from DB
