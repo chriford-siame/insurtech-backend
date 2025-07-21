@@ -33,6 +33,12 @@ class Quotation(models.Model):
         ('commercial', 'Commercial'),
         ('private', 'Private'),
     ]
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('reviewed', 'Reviewed'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="client")
     registration_number = models.CharField(max_length=10)
     model = models.ForeignKey("Model", on_delete=models.PROTECT, related_name="model")
@@ -42,7 +48,11 @@ class Quotation(models.Model):
     chassis_number = models.CharField(max_length=100)
     vehicle_use = models.CharField(max_length=100, choices=VEHICLE_USE_CHOICES, blank=True, null=True) 
     cover_end = models.DateField(auto_now=False, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    has_paid = models.BooleanField(default=False)
+    insured_price = models.DecimalField(decimal_places=2, max_digits=1000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=False, blank=True)
+
     def __str__(self):
         return f"{self.registration_number}"
 

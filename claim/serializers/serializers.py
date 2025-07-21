@@ -72,6 +72,8 @@ class QuotationSerializer(serializers.ModelSerializer):
             "chassis_number",
             "vehicle_use",
             "cover_end",
+            "has_paid",
+            "insured_price",
             "created_at",
         ]
     
