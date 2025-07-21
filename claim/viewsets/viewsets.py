@@ -8,13 +8,25 @@ from claim.serializers import (
     ClaimantSerializer, 
     ReviewerSerializer,
     ClaimFileSerializer,
+    MakeYearSerializer,
+    MakeSerializer,
+    ModelSerializer,
+    QuotationSerializer,    
 )
 from django.contrib.auth.models import User
-from claim.models import Claimant, Reviewer, ClaimFile
+from claim.models import (
+    Claimant, 
+    Reviewer, 
+    ClaimFile,
+    MakeYear,
+    Make,
+    Model,
+    Quotation,
+)
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for managing product categories.
+    ViewSet for managing Quotation categories.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -62,4 +74,34 @@ class ClaimFileViewSet(viewsets.ModelViewSet):
     queryset = ClaimFile.objects.all()
     serializer_class = ClaimFile
     permission_classes = [permissions.IsAuthenticated]
+
+class MakeYearViewSet(viewsets.ModelViewSet):
+    queryset = MakeYear.objects.all()
+    serializer_class = MakeYearSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class MakeViewSet(viewsets.ModelViewSet):
+    queryset = Make.objects.all()
+    serializer_class = MakeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ModelViewSet(viewsets.ModelViewSet):
+    queryset = Model.objects.all()
+    serializer_class = ModelSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class QuotationViewSet(viewsets.ModelViewSet):
+    queryset = Quotation.objects.all()
+    serializer_class = QuotationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    @action(detail=False, methods=["get"], url_path="list")
+    def all_quotations(self, request):
+        queryset = Quotation.objects.filter(user__username=request.user.username)
+        serializer = QuotationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
 
