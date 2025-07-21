@@ -1,8 +1,51 @@
 from django.db import models
 from django.contrib.auth.models import User
-# models.py
 
 from django.db import models
+
+class MakeYear(models.Model):
+    """Model for storing vehicle make years"""
+    year = models.CharField(max_length=4)
+
+    def __str__(self):
+        return f"{self.year}"
+
+
+class Make(models.Model):
+    """Model for storing vehicle makes"""
+    year = models.ForeignKey("MakeYear", on_delete=models.CASCADE, related_name="make_year")
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"
+
+class Model(models.Model):
+    """Model for storing vehicle make models"""
+    make = models.ForeignKey("Make", on_delete=models.CASCADE, related_name="make")
+    name = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Quotation(models.Model):
+    VEHICLE_USE_CHOICES = [
+        ('commercial', 'Commercial'),
+        ('private', 'Private'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="client")
+    registration_number = models.CharField(max_length=10)
+    model = models.ForeignKey("Model", on_delete=models.PROTECT, related_name="model")
+    color = models.CharField(max_length=10)
+    engine_capacity = models.CharField(max_length=100)
+    engine_number = models.CharField(max_length=100)
+    chassis_number = models.CharField(max_length=100)
+    vehicle_use = models.CharField(max_length=100, choices=VEHICLE_USE_CHOICES, blank=True, null=True) 
+    cover_end = models.DateField(auto_now=False, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=False, blank=True)
+    def __str__(self):
+        return f"{self.registration_number}"
+
 
 class Reviewer(models.Model):
     """
