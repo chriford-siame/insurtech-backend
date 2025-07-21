@@ -59,7 +59,7 @@ class Reviewer(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-class Claimant(models.Model):
+class Claim(models.Model):
     """
     Represents a person submitting an insurance claim.
     """
@@ -99,10 +99,10 @@ class Claimant(models.Model):
 
 class ClaimFile(models.Model):
     """
-    Files attached to a claimant's submission.
+    stores files for a claim.
     """
-    claimant = models.ForeignKey(Claimant, on_delete=models.CASCADE, related_name="files")
+    claim = models.ForeignKey(Claim, on_delete=models.CASCADE, related_name="files")
     file = models.FileField(upload_to="claim_files/")
 
     def __str__(self):
-        return f"File for {self.claimant}"
+        return f"File for {self.claim}"

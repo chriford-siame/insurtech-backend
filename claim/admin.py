@@ -1,6 +1,6 @@
 from django.contrib import admin
 from claim.models import (
-    Claimant, 
+    Claim, 
     Reviewer, 
     ClaimFile,
     MakeYear,
@@ -9,7 +9,7 @@ from claim.models import (
     Quotation,
 )
 
-admin.site.register(Claimant)
+admin.site.register(Claim)
 admin.site.register(Reviewer)
 admin.site.register(ClaimFile)
 admin.site.register(MakeYear)

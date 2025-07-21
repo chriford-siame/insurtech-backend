@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 
 from claim.models import (
-    Claimant, 
+    Claim, 
     Reviewer, 
     ClaimFile,
     MakeYear,
@@ -67,7 +67,7 @@ class ClaimFileSerializer(serializers.ModelSerializer):
         fields = ['id', 'file']
 
 
-class ClaimantSerializer(serializers.ModelSerializer):
+class ClaimSerializer(serializers.ModelSerializer):
     files = serializers.ListField(
         child=serializers.FileField(),
         write_only=True,
@@ -76,7 +76,7 @@ class ClaimantSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
-        model = Claimant
+        model = Claim
         fields = [
                 'id',
                 'files',
@@ -95,9 +95,9 @@ class ClaimantSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         files = validated_data.pop('files', [])
-        claim = Claimant.objects.create(**validated_data)
+        claim = Claim.objects.create(**validated_data)
         for f in files:
-            ClaimFile.objects.create(claimant=claim, file=f)
+            ClaimFile.objects.create(claim=claim, file=f)
         return claim
 
 

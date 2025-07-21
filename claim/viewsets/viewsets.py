@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 from claim.serializers import (
     UserSerializer,
-    ClaimantSerializer, 
+    ClaimSerializer, 
     ReviewerSerializer,
     ClaimFileSerializer,
     MakeYearSerializer,
@@ -15,7 +15,7 @@ from claim.serializers import (
 )
 from django.contrib.auth.models import User
 from claim.models import (
-    Claimant, 
+    Claim, 
     Reviewer, 
     ClaimFile,
     MakeYear,
@@ -51,15 +51,15 @@ class UserViewSet(viewsets.ModelViewSet):
     
     
 
-class ClaimantViewSet(viewsets.ModelViewSet):
-    queryset = Claimant.objects.all()
-    serializer_class = ClaimantSerializer
+class ClaimViewSet(viewsets.ModelViewSet):
+    queryset = Claim.objects.all()
+    serializer_class = ClaimSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     @action(detail=False, methods=["get"], url_path="list")
     def all_claims(self, request):
-        queryset = Claimant.objects.filter(user__username=request.user.username)
-        serializer = ClaimantSerializer(queryset, many=True)
+        queryset = Claim.objects.filter(user__username=request.user.username)
+        serializer = ClaimSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def perform_create(self, serializer):

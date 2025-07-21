@@ -1,9 +1,9 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-from claim.models import Claimant
+from claim.models import Claim
 
-@receiver(pre_save, sender=Claimant)
+@receiver(pre_save, sender=Claim)
 def notify_user_on_status_change(sender, instance, **kwargs):
     if not instance.pk:
         # New record; skip
@@ -12,8 +12,8 @@ def notify_user_on_status_change(sender, instance, **kwargs):
 
     # Fetch existing object from DB
     try:
-        previous = Claimant.objects.get(pk=instance.pk)
-    except Claimant.DoesNotExist:
+        previous = Claim.objects.get(pk=instance.pk)
+    except Claim.DoesNotExist:
         return
 
     # Compare statuses

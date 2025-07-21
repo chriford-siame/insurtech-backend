@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 
 from claim.viewsets import (
     UserViewSet    ,
-    ClaimantViewSet,
+    ClaimViewSet,
     ReviewerViewSet,
     ClaimFileViewSet,
     MakeYearViewSet,
@@ -14,7 +14,7 @@ from claim.viewsets import (
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
-router.register(r'claims', ClaimantViewSet, basename='claims')
+router.register(r'claims', ClaimViewSet, basename='claims')
 router.register(r'reviewers', ReviewerViewSet, basename='reviewer')
 router.register(r'claimfiles', ClaimFileViewSet, basename='claimfiles')
 router.register(r'make', MakeViewSet, basename='make')
