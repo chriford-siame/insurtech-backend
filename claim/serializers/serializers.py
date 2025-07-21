@@ -11,6 +11,15 @@ from claim.models import (
     Quotation,
 )
 
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for User model.
+    """
+
+    class Meta:
+        model = User
+        fields = '__all__'
+        
 class MakeYearSerializer(serializers.ModelSerializer):
     """
     Serializer for MakeYear model.
@@ -45,20 +54,27 @@ class QuotationSerializer(serializers.ModelSerializer):
     """
     Serializer for Quotation model.
     """
+    
+class QuotationSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Quotation
-        fields = '__all__'
-
-# ...
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for User model.
-    """
-
-    class Meta:
-        model = User
-        fields = '__all__'
+        fields = [
+            "id",
+            "user",
+            "registration_number",
+            "model",
+            "color",
+            "engine_capacity",
+            "engine_number",
+            "chassis_number",
+            "vehicle_use",
+            "cover_end",
+            "created_at",
+        ]
+    
 
 
 class ClaimFileSerializer(serializers.ModelSerializer):
