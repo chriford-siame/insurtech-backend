@@ -1,8 +1,56 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from claim.models import Claimant, Reviewer, ClaimFile
+from claim.models import (
+    Claimant, 
+    Reviewer, 
+    ClaimFile,
+    MakeYear,
+    Make,
+    Model,
+    Quotation,
+)
 
+class MakeYearSerializer(serializers.ModelSerializer):
+    """
+    Serializer for MakeYear model.
+    """
+
+    class Meta:
+        model = MakeYear
+        fields = '__all__'
+
+
+class MakeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Make model.
+    """
+
+    class Meta:
+        model = Make
+        fields = '__all__'
+
+
+class ModelSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Model model.
+    """
+
+    class Meta:
+        model = Model
+        fields = '__all__'
+
+
+class QuotationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Quotation model.
+    """
+
+    class Meta:
+        model = Quotation
+        fields = '__all__'
+
+# ...
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for User model.
