@@ -34,30 +34,31 @@ class MakeSerializer(serializers.ModelSerializer):
     """
     Serializer for Make model.
     """
-
+    year = MakeYearSerializer(read_only=True)
     class Meta:
         model = Make
-        fields = '__all__'
+        fields = ['id', 'year', 'name']
+
 
 
 class ModelSerializer(serializers.ModelSerializer):
     """
-    Serializer for Model model.
+    Serializer for model model.
     """
+    make = MakeYearSerializer(read_only=True)
 
     class Meta:
         model = Model
-        fields = '__all__'
+        fields = [
+            "id",
+            "make",
+            "name"
+        ]
 
-
-class QuotationSerializer(serializers.ModelSerializer):
-    """
-    Serializer for Quotation model.
-    """
-    
 class QuotationSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
+    model = ModelSerializer(read_only=True)
 
     class Meta:
         model = Quotation
@@ -79,7 +80,6 @@ class QuotationSerializer(serializers.ModelSerializer):
             "created_at",
         ]
     
-
 
 class ClaimFileSerializer(serializers.ModelSerializer):
     class Meta:
