@@ -27,7 +27,7 @@ class MakeYearSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MakeYear
-        fields = '__all__'
+        fields = ['id', 'year']
 
 
 class MakeSerializer(serializers.ModelSerializer):
@@ -45,15 +45,11 @@ class ModelSerializer(serializers.ModelSerializer):
     """
     Serializer for model model.
     """
-    make = MakeYearSerializer(read_only=True)
+    make = MakeSerializer(read_only=True)
 
     class Meta:
         model = Model
-        fields = [
-            "id",
-            "make",
-            "name"
-        ]
+        fields = '__all__'
 
 class QuotationSerializer(serializers.ModelSerializer):
 
