@@ -51,6 +51,7 @@ class Quotation(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     has_paid = models.BooleanField(default=False)
     insured_price = models.DecimalField(decimal_places=2, max_digits=1000, null=True, blank=True)
+    quotation = models.FileField(upload_to="quotation_files/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=False, blank=True)
 
     def __str__(self):

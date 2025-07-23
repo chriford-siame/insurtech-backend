@@ -74,6 +74,8 @@ class QuotationSerializer(serializers.ModelSerializer):
             "cover_end",
             "has_paid",
             "insured_price",
+            "status",
+            "quotation",
             "created_at",
         ]
     
