@@ -54,7 +54,7 @@ class ModelSerializer(serializers.ModelSerializer):
 class QuotationSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
-    model = ModelSerializer(read_only=True)
+    model_info = serializers.SerializerMethodField()
 
     class Meta:
         model = Quotation
@@ -63,6 +63,7 @@ class QuotationSerializer(serializers.ModelSerializer):
             "user",
             "registration_number",
             "model",
+            "model_info",
             "color",
             "engine_capacity",
             "engine_number",
@@ -75,7 +76,12 @@ class QuotationSerializer(serializers.ModelSerializer):
             "quotation",
             "created_at",
         ]
-    
+        
+    def get_model_info(self, obj):
+        model_id = obj.model.id
+        model_obj = Model.objects.get(id=model_id)
+        response = ModelSerializer(model_obj)
+        return response.data
 
 class ClaimFileSerializer(serializers.ModelSerializer):
     class Meta:
