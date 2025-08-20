@@ -24,6 +24,12 @@ from claim.models import (
     Quotation,
 )
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+from ..serializers import EmailTokenObtainPairSerializer
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
+    
 class UserViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing Quotation categories.

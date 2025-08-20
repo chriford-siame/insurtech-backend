@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import authenticate
+from rest_framework import serializers
 
 from claim.models import (
     Claim, 
@@ -27,6 +30,29 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'email'  # Tells DRF to look for email instead of username
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        user = authenticate(username=email, password=password)  # authenticate still uses username field
+
+        if user is None:
+            # try fetching user by email manually
+            try:
+                user_obj = User.objects.get(email=email)
+            except User.DoesNotExist:
+                raise serializers.ValidationError("No user with this email")
+            user = authenticate(username=user_obj.username, password=password)
+
+        if user is None:
+            raise serializers.ValidationError("Invalid credentials")
+
+        return super().validate({"username": user.username, "password": password})
 
 class MakeYearSerializer(serializers.ModelSerializer):
     """

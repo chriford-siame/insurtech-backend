@@ -14,6 +14,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from claim.viewsets import EmailTokenObtainPairView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,6 +38,8 @@ urlpatterns = [
     path('', include('claim.routers')),
     
     path('token/get/', views.obtain_auth_token),
+    # path('token/', EmailTokenObtainPairView.as_view(), name='token-obtain-pair'),
+
     path('token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     
